@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skin Routine 💜 Purple Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0919; --card:#1a1231; --ink:#f4eeff; --muted:#b6a8d9; --line:#33264f;
+  --am1:#ffc6ee; --am2:#b99bff; --am-ink:#2a0f4d;
+  --pm1:#2a1060; --pm2:#7b3fe4; --pm-ink:#ffffff;
+  --ok:#6ee7c8; --ok-bg:#12372f; --warn:#f6c26b; --warn-bg:#3b2c12; --bad:#ff9a92; --bad-bg:#3f1c22;
+  --accent:#b894ff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+html{color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;min-height:100%;background:radial-gradient(900px 420px at 50% -80px,#3d1d78 0,transparent 70%) no-repeat var(--bg);color:var(--ink);font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:'Bricolage Grotesque','Manrope',system-ui,sans-serif;margin:0;line-height:1.15}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#app{max-width:560px;margin:0 auto;padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+
+/* header */
+.hero{padding:22px 20px 26px;border-radius:0 0 28px 28px;transition:background .3s}
+.hero[data-mode="am"]{background:linear-gradient(160deg,var(--am1),var(--am2));color:var(--am-ink)}
+.hero[data-mode="pm"]{background:linear-gradient(160deg,var(--pm1),var(--pm2));color:var(--pm-ink)}
+.hero .date{font-size:14px;font-weight:700;opacity:.8}
+.hero h1{font-size:30px;font-weight:800;margin:4px 0 14px}
+.hero-row{display:flex;align-items:center;gap:16px}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring svg{transform:rotate(-90deg);filter:drop-shadow(0 0 7px rgba(255,255,255,.55))}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px}
+.hero-msg{font-weight:700;font-size:17px;line-height:1.3}
+.hero-sub{font-size:14px;opacity:.85;margin-top:2px}
+.seg{display:flex;background:rgba(0,0,0,.14);border-radius:14px;padding:4px;margin-top:18px}
+.seg button{flex:1;border:0;background:transparent;padding:10px 8px;border-radius:11px;font-weight:700;font-size:15px;color:inherit;opacity:.8;min-height:44px}
+.seg button[aria-pressed="true"]{background:rgba(255,255,255,.92);color:#1c2333;opacity:1}
+
+/* sections */
+.pad{padding:18px 16px 0}
+.sec-title{font-size:20px;font-weight:800;margin:6px 4px 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+.task{display:block;margin-bottom:10px;overflow:hidden}
+.task-main{display:flex;align-items:center;gap:14px;width:100%;padding:14px 14px;background:none;border:0;text-align:left;min-height:64px}
+.box{flex:none;width:30px;height:30px;border-radius:10px;border:2.5px solid var(--muted);display:grid;place-items:center;transition:all .15s;color:transparent}
+.task.done .box{background:var(--ok);border-color:var(--ok);color:#0e0919}
+.task.done .t-label{text-decoration:line-through;color:var(--muted)}
+.t-label{font-weight:700;font-size:16.5px;line-height:1.3}
+.t-hint{font-size:14px;color:var(--muted);margin-top:2px}
+.info-btn{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-weight:800;font-size:18px;margin-right:4px}
+.task-row{display:flex;align-items:center}
+.task-row .task-main{flex:1}
+.detail{padding:0 18px 16px 62px;font-size:15px;color:var(--muted)}
+.detail[hidden]{display:none}
+.rest{background:var(--warn-bg);color:var(--warn);border-radius:16px;padding:14px 16px;margin-bottom:10px;font-weight:700;font-size:15px}
+.rest span{display:block;font-weight:500;margin-top:2px}
+.step-tag{font-size:12px;font-weight:700;color:var(--muted)}
+.ok-banner{background:var(--ok-bg);color:var(--ok);border-radius:16px;padding:16px;font-weight:800;font-family:'Bricolage Grotesque',sans-serif;font-size:19px;text-align:center;margin:6px 0 12px}
+
+/* check-in */
+.checkin{padding:16px;margin-top:6px}
+.checkin h3{font-size:18px;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--line);background:transparent;border-radius:14px;padding:10px 12px;font-weight:700;font-size:14.5px;min-height:44px}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.note{margin-top:12px;padding:12px 14px;border-radius:12px;font-size:14.5px}
+.note.good{background:var(--ok-bg);color:var(--ok)}
+.note.mid{background:var(--warn-bg);color:var(--warn)}
+.note.bad{background:var(--bad-bg);color:var(--bad)}
+
+/* plan */
+.phase{display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;border:2px solid var(--line);background:var(--card);border-radius:16px}
+.phase[aria-pressed="true"]{border-color:var(--accent)}
+.phase b{font-family:'Bricolage Grotesque',sans-serif;font-size:18px}
+.phase small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.week{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden}
+.week th,.week td{padding:10px 4px;text-align:center;font-size:14px;border-bottom:1px solid var(--line)}
+.week th{font-weight:700;color:var(--muted)}
+.week td:first-child,.week th:first-child{text-align:left;padding-left:14px;font-weight:700}
+.week tr:last-child td{border-bottom:0}
+.week .today{background:color-mix(in srgb,var(--accent) 13%,transparent);font-weight:800;color:var(--ink)}
+.dot{display:inline-block;width:20px;height:20px;border-radius:50%;vertical-align:middle}
+.dot.on-am{background:var(--am2)} .dot.on-pm{background:var(--pm2)} .dot.off{background:transparent;border:2px dashed var(--line)}
+.legend{font-size:13.5px;color:var(--muted);margin:10px 4px}
+.stats{display:flex;gap:10px;margin:10px 0}
+.stat{flex:1;padding:14px;text-align:center}
+.stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:28px}
+.stat span{font-size:13.5px;color:var(--muted)}
+
+/* reminders */
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
+.row + .row{border-top:1px solid var(--line)}
+.row label{font-weight:700}
+.row small{display:block;color:var(--muted);font-weight:400;font-size:13.5px}
+input[type=time]{font:inherit;font-weight:700;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);min-height:44px}
+.switch{position:relative;width:54px;height:32px;flex:none}
+.switch input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.switch i{position:absolute;inset:0;border-radius:20px;background:var(--line);transition:.2s}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked + i{background:var(--ok)}
+.switch input:checked + i::after{transform:translateX(22px)}
+.switch input:focus-visible + i{outline:3px solid var(--accent);outline-offset:2px}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:14px;font-weight:800;background:var(--accent);color:#1a0b38;min-height:48px;margin-top:10px}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.callout{padding:14px 16px;border-radius:14px;background:var(--warn-bg);color:var(--warn);font-size:14.5px;margin-top:12px}
+
+/* learn */
+details.card{margin-bottom:10px;padding:0}
+details summary{padding:16px;font-weight:800;font-size:16.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-size:22px;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .body{padding:0 16px 16px;color:var(--muted);font-size:15px}
+.body ul{margin:0;padding-left:20px}
+.body li{margin-bottom:8px}
+.body li b{color:var(--ink)}
+.red{background:var(--bad-bg);color:var(--bad);border-radius:16px;padding:16px;margin:12px 0;font-weight:700}
+.red span{display:block;font-weight:500;margin-top:4px}
+.small{font-size:13px;color:var(--muted);margin:16px 6px}
+
+.heart{position:fixed;bottom:96px;font-size:26px;pointer-events:none;z-index:40;animation:floatUp 2.2s ease-out forwards}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-70vh) scale(1.3)}}
+/* toast */
+#toast{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));max-width:536px;margin:0 auto;z-index:30;background:var(--ink);color:var(--bg);border-radius:16px;padding:14px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+#toast[hidden]{display:none}
+#toast p{margin:0;flex:1;font-weight:700;font-size:15px}
+#toast button{border:0;border-radius:10px;padding:9px 12px;font-weight:800;background:var(--bg);color:var(--ink);min-height:40px}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+nav .in{max-width:560px;margin:0 auto;display:flex}
+nav button{flex:1;border:0;background:none;padding:8px 2px;border-radius:12px;font-size:12.5px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;min-height:56px}
+nav button[aria-current="page"]{color:var(--accent)}
+nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="toast" hidden role="status" aria-live="polite"><p id="toast-msg"></p><button id="toast-go">Dekho</button><button id="toast-x" aria-label="Band karo">✕</button></div>
+<div id="app"></div>
+<nav aria-label="Menu"><div class="in" id="nav"></div></nav>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- storage (safe) ---------- */
+var mem = {};
+function load(k, d){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return (k in mem) ? mem[k] : d; } }
+function save(k, v){ mem[k] = v; try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+/* ---------- data ---------- */
+var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var PHASES = [
+  {id:1, name:'Debut', weeks:'Week 1–2', tret:[1,4], aza:[2,5],
+   desc:'Tretinoin hafte mein 2 raat, azelaic hafte mein 2 din. Alag-alag din par, saath nahi.'},
+  {id:2, name:'Rising Star', weeks:'Week 3–4', tret:[1,3,5], aza:[2,4,6],
+   desc:'Tretinoin 3 raat, azelaic ek din chhodkar. Sirf tab badhao jab skin theek ho.'},
+  {id:3, name:'World Tour', weeks:'Week 5+', tret:[0,1,2,3,4,5,6], aza:[0,1,2,3,4,5,6],
+   desc:'Subah azelaic, raat ko tretinoin. Jab skin aaram se tolerate kare tabhi.'}
+];
+var AM_TASKS = {
+  clean:{l:'Halka cleanser se chehra dhoyein', h:'Step 1', d:'Ragdo mat, skin ko zyada dry mat karo. Gentle cleanser hi lo.'},
+  aza:{l:'Azelaic acid lagao — patli layer', h:'Step 2', d:'Sirf patli layer. Zyada lagane se jaldi result nahi aata, bas jalan badhti hai. Shuru mein thodi chubhan ya khujli ho sakti hai.'},
+  moist:{l:'Moisturizer lagao', h:'Step 3', d:'Fragrance-free, halka moisturizer. Dryness ya chubhan ho to zaroor lagao.'},
+  spf:{l:'Sunscreen lagao (SPF 30+, SPF 50 best)', h:'Step 4 — sabse aakhri', d:'Roz subah, chahe dhoop ho ya na ho. Dhoop se dark marks badhte hain aur tretinoin se skin sun ke prati zyada sensitive ho jaati hai.'}
+};
+var PM_TASKS = {
+  clean:{l:'Halka cleanser se chehra dhoyein', h:'Step 1', d:'Gentle cleanser. Scrub bilkul nahi.'},
+  dry:{l:'Chehra poori tarah sukhne do', h:'Step 2', d:'Geeli skin par actives lagane se irritation badhti hai. Tauliye se thapthapao aur thodi der ruko.'},
+  moist1:{l:'Pehle moisturizer (sandwich method)', h:'Sensitive skin ke liye', d:'Moisturizer → tretinoin → moisturizer. Isse tretinoin ki jalan kam hoti hai.'},
+  tret:{l:'Tretinoin lagao — matar ke dane jitni', h:'Step 3', d:'Poore chehre ke liye sirf matar ke dane jitni. Zyada lagane se result tez nahi hota, irritation badhti hai. Pregnancy mein avoid karein.'},
+  moist:{l:'Moisturizer lagao', h:'Aakhri step', d:'Tretinoin ke baad moisturizer zaroori hai. Ye skin barrier ko bachata hai, optional nahi hai.'}
+};
+
+/* ---------- state ---------- */
+var S = load('skin_state', {phase:1, sandwich:true, am:'08:00', pm:'21:30', remOn:false, tab:'today', mode:null});
+var HIST = load('skin_hist', {});     // date -> {ids:{}, full:bool}
+var CHECK = load('skin_check', {});   // date -> 'ok'|'mild'|'bad'
+var FIRED = load('skin_fired', {});   // date -> {am:true,pm:true}
+function saveS(){ save('skin_state', S); }
+
+function pad(n){ return (n<10?'0':'')+n; }
+function key(d){ d = d||new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function defaultMode(){ return new Date().getHours() < 15 ? 'am' : 'pm'; }
+if(!S.mode) S.mode = defaultMode();
+function phase(){ return PHASES[S.phase-1]; }
+function has(list, dow){ return list.indexOf(dow) > -1; }
+
+/* ---------- tasks ---------- */
+function tasksFor(mode, dow){
+  var p = phase(), out = [], rest = null;
+  if(mode==='am'){
+    out.push(['am-clean', AM_TASKS.clean]);
+    if(has(p.aza, dow)) out.push(['am-aza', AM_TASKS.aza]);
+    else rest = 'Aaj azelaic acid nahi';
+    out.push(['am-moist', AM_TASKS.moist]);
+    out.push(['am-spf', AM_TASKS.spf]);
+  } else {
+    out.push(['pm-clean', PM_TASKS.clean]);
+    if(has(p.tret, dow)){
+      out.push(['pm-dry', PM_TASKS.dry]);
+      if(S.sandwich) out.push(['pm-moist1', PM_TASKS.moist1]);
+      out.push(['pm-tret', PM_TASKS.tret]);
+    } else rest = 'Aaj tretinoin nahi — rest night';
+    out.push(['pm-moist', PM_TASKS.moist]);
+  }
+  return {tasks:out, rest:rest};
+}
+function dayIds(d){ return HIST[d] ? HIST[d].ids : {}; }
+function isChecked(d, id){ return !!dayIds(d)[id]; }
+function allIdsForDate(dt){
+  var dow = dt.getDay();
+  return tasksFor('am',dow).tasks.concat(tasksFor('pm',dow).tasks).map(function(t){return t[0];});
+}
+function updateFull(d){
+  var dt = new Date(); var ids = allIdsForDate(dt);
+  var full = ids.every(function(i){ return isChecked(d,i); });
+  HIST[d].full = full;
+}
+function progress(mode){
+  var d = key(), t = tasksFor(mode, new Date().getDay()).tasks;
+  var n = t.filter(function(x){ return isChecked(d, x[0]); }).length;
+  return {n:n, total:t.length};
+}
+function streak(){
+  var c = 0, dt = new Date();
+  if(!(HIST[key(dt)] && HIST[key(dt)].full)) dt.setDate(dt.getDate()-1);
+  while(HIST[key(dt)] && HIST[key(dt)].full){ c++; dt.setDate(dt.getDate()-1); }
+  return c;
+}
+function totalFullDays(){ var n=0; for(var k in HIST){ if(HIST[k].full) n++; } return n; }
+
+/* ---------- render ---------- */
+var app = document.getElementById('app');
+var navEl = document.getElementById('nav');
+var ICONS = {
+  today:'<svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>',
+  plan:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  rem:'<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  learn:'<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 8h6"/></svg>'
+};
+var TABS = [['today','Aaj'],['plan','Plan'],['rem','Reminder'],['learn','Seekho']];
+
+function renderNav(){
+  navEl.innerHTML = TABS.map(function(t){
+    return '<button data-tab="'+t[0]+'" '+(S.tab===t[0]?'aria-current="page"':'')+'>'+ICONS[t[0]]+'<span>'+t[1]+'</span></button>';
+  }).join('');
+}
+
+function ringSvg(frac, color){
+  var r=34, c=2*Math.PI*r;
+  return '<svg width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="'+r+'" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="9"/>'+
+    '<circle cx="42" cy="42" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-frac))+'"/></svg>';
+}
+
+function renderToday(){
+  var now = new Date(), d = key(now), dow = now.getDay();
+  var mode = S.mode, pr = progress(mode), T = tasksFor(mode, dow);
+  var amP = progress('am'), pmP = progress('pm');
+  var dateStr = DAYS[dow]+', '+now.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][now.getMonth()];
+  var frac = pr.total ? pr.n/pr.total : 0;
+  var msg = pr.n===pr.total ? (mode==='am'?'Day show complete! Borahae 💜':'Night show complete! Borahae 💜') : (pr.total-pr.n)+' kaam baaki hain';
+  var sub = mode==='am' ? 'Subah ka routine' : 'Raat ka routine';
+  var ringColor = mode==='am' ? '#2a0f4d' : '#ffffff';
+
+  var h = '<header class="hero" data-mode="'+mode+'">'+
+    '<div class="date">'+dateStr+'</div>'+
+    '<h1>'+(mode==='am'?'Day show ☀️':'Night show 🌙')+'</h1>'+
+    '<div class="hero-row"><div class="ring">'+ringSvg(frac, ringColor)+'<div class="num">'+pr.n+'/'+pr.total+'</div></div>'+
+    '<div><div class="hero-msg">'+msg+'</div><div class="hero-sub">'+sub+' · Phase: '+phase().name+'</div></div></div>'+
+    '<div class="seg" role="group" aria-label="Subah ya raat">'+
+      '<button data-mode="am" aria-pressed="'+(mode==='am')+'">Subah ('+amP.n+'/'+amP.total+')</button>'+
+      '<button data-mode="pm" aria-pressed="'+(mode==='pm')+'">Raat ('+pmP.n+'/'+pmP.total+')</button>'+
+    '</div></header><div class="pad">';
+
+  if(pr.n===pr.total && pr.total>0) h += '<div class="ok-banner">Encore! Ye show hit raha 💜</div>';
+  if(T.rest) h += '<div class="rest">'+T.rest+'<span>Skin ko aaram dene se wo adjust hoti hai. Baaki steps karte raho.</span></div>';
+
+  h += '<h2 class="sec-title">Aaj ka setlist 💜</h2>';
+  T.tasks.forEach(function(t){
+    var id=t[0], x=t[1], done=isChecked(d,id);
+    h += '<div class="card task'+(done?' done':'')+'" id="t-'+id+'"><div class="task-row">'+
+      '<button class="task-main" data-toggle="'+id+'" role="checkbox" aria-checked="'+done+'">'+
+        '<span class="box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>'+
+        '<span><span class="t-label">'+x.l+'</span><div class="t-hint">'+x.h+'</div></span></button>'+
+      '<button class="info-btn" data-info="'+id+'" aria-label="Details dekho" aria-expanded="false">?</button></div>'+
+      '<div class="detail" id="d-'+id+'" hidden>'+x.d+'</div></div>';
+  });
+
+  if(mode==='pm'){
+    var c = CHECK[d];
+    h += '<div class="card checkin"><h3>Aaj skin kaisi lag rahi hai?</h3><div class="chips">'+
+      chip('ok','Theek hai',c)+chip('mild','Thodi dry / jalan',c)+chip('bad','Bahut irritation',c)+'</div>'+checkNote(c)+'</div>';
+  }
+  h += '</div>';
+  return h;
+}
+function chip(v,l,c){ return '<button class="chip" data-check="'+v+'" aria-pressed="'+(c===v)+'">'+l+'</button>'; }
+function checkNote(c){
+  if(c==='ok') return '<div class="note good">Badhiya. Isi tarah dheere-dheere chalte raho.</div>';
+  if(c==='mild') return '<div class="note mid">Thodi dryness aam hai. Moisturizer ka dhyan rakho, aur frequency abhi mat badhao. Zyada peeling ke peeche mat bhaago.</div>';
+  if(c==='bad') return '<div class="note bad">Aaj tretinoin / azelaic mat lagao, sirf gentle cleanser + moisturizer. Agar irritation kam na ho, ya sujan, chhale, ya tez jalan ho to dermatologist ko dikhao. Ise sirf "purge" mat samjho.</div>';
+  return '';
+}
+
+function renderPlan(){
+  var now = new Date().getDay();
+  var h = '<div class="pad"><h2 class="sec-t
